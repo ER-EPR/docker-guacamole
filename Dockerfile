@@ -56,7 +56,8 @@ RUN curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamo
 # Install guacamole-client and postgres auth adapter
 RUN set -x \
   && rm -rf ${CATALINA_HOME}/webapps/ROOT \
-  && curl -SLo ${CATALINA_HOME}/webapps/ROOT.war "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${G$  && curl -SLo ${GUACAMOLE_HOME}/lib/postgresql-${PSQLJDBC_VER}.jar "https://jdbc.postgresql.org/download/postgresql-${PSQLJDBC_VER}.jar" \
+  && curl -SLo ${CATALINA_HOME}/webapps/ROOT.war "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${GUAC_VER}.war" \
+  && curl -SLo ${GUACAMOLE_HOME}/lib/postgresql-${PSQLJDBC_VER}.jar "https://jdbc.postgresql.org/download/postgresql-${PSQLJDBC_VER}.jar" \
   && curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz" \
   && tar -xzf guacamole-auth-jdbc-${GUAC_VER}.tar.gz \
   && cp -R guacamole-auth-jdbc-${GUAC_VER}/postgresql/guacamole-auth-jdbc-postgresql-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions/ \
