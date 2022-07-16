@@ -38,11 +38,11 @@ RUN [ "$ARCH" = "amd64" ] && ln -s /usr/local/lib/freerdp /usr/lib/x86_64-linux-
 # Add make and gcc
 RUN apt-get update && apt-get install -y build-essential
 
-# Install guacamole-server
+# Install guacamole-server  --with-init-dir=/etc/init.d
 RUN curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/source/guacamole-server-${GUAC_VER}.tar.gz" \
   && tar -xzf guacamole-server-${GUAC_VER}.tar.gz \
   && cd guacamole-server-${GUAC_VER} \
-  && ./configure --with-init-dir=/etc/init.d --enable-allow-freerdp-snapshots \
+  && ./configure --enable-allow-freerdp-snapshots \
   && make -j$(getconf _NPROCESSORS_ONLN) \
   && make install \
   && cd .. \
