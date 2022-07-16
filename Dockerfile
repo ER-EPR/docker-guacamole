@@ -1,9 +1,9 @@
-FROM library/tomcat:9-jre11-openjdk-buster
+FROM library/tomcat:jre11-openjdk-bullseye
 
 ENV ARCH=amd64 \
   GUAC_VER=1.4.0 \
   GUACAMOLE_HOME=/app/guacamole \
-  PG_MAJOR=11 \
+  PG_MAJOR=13 \
   PGDATA=/config/postgres \
   POSTGRES_USER=guacamole \
   POSTGRES_DB=guacamole_db \
@@ -23,7 +23,7 @@ WORKDIR ${GUACAMOLE_HOME}
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
-    libcairo2-dev libjpeg62-turbo-dev libpng12-dev \
+    libcairo2-dev libjpeg62-turbo-dev libpng-dev \
     libtool-bin uuid-dev libavcodec-dev libavformat-dev libavutil-dev \
     libswscale-dev freerdp2-dev libfreerdp-client2-2 libpango1.0-dev \
     libssh2-1-dev libtelnet-dev libvncserver-dev libwebsockets-dev \
@@ -75,7 +75,7 @@ ENV PATH=/usr/lib/postgresql/${PG_MAJOR}/bin:$PATH
 ENV GUACAMOLE_HOME=/config/guacamole
 
 WORKDIR /config
-
+COPY root/test.md /
 COPY root /
 
 EXPOSE 8080
