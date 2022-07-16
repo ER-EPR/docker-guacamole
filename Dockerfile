@@ -22,7 +22,7 @@ WORKDIR ${GUACAMOLE_HOME}
 
 # Install dependencies postgresql-${PG_MAJOR}
 RUN apt-get update && apt-get install -y \
-    ibcairo2-dev libjpeg-turbo8-dev libpng-dev uuid-dev \
+    libcairo2-dev libjpeg-turbo8-dev libpng-dev uuid-dev \
     libtool-bin libavcodec-dev libavformat-dev libavutil-dev \
     libswscale-dev freerdp2-dev libfreerdp-client2-2 libpango1.0-dev \
     libssh2-1-dev libtelnet-dev libvncserver-dev \
