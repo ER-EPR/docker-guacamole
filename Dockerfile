@@ -1,4 +1,4 @@
-FROM library/tomcat:jre11-openjdk-buster
+FROM library/tomcat:9-jre11-openjdk-buster
 
 ENV ARCH=amd64 \
   GUAC_VER=1.4.0 \
