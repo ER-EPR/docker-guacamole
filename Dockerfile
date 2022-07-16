@@ -1,13 +1,14 @@
-FROM library/tomcat:jre11-openjdk-bullseye
+FROM library/tomcat:9.0.64-jre11-openjdk-bullseye
 
 ENV ARCH=amd64 \
   GUAC_VER=1.4.0 \
   GUACAMOLE_HOME=/app/guacamole \
-  PG_MAJOR=13 \
+  PG_MAJOR=9.6 \
   PGDATA=/config/postgres \
   POSTGRES_USER=guacamole \
   POSTGRES_DB=guacamole_db \
-  PSQLJDBC_VER=42.4.0
+  PSQLJDBC_VER=42.4.0 \
+  LSB_RELEASE=bullseye
 
 # Apply the s6-overlay
 
@@ -20,12 +21,15 @@ RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v
     ${GUACAMOLE_HOME}/extensions
 
 WORKDIR ${GUACAMOLE_HOME}
+# Change postgresql source
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt ${LSB_RELEASE}-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+  && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y rsyslog\
     libcairo2-dev libjpeg62-turbo-dev libpng-dev \
     libtool-bin uuid-dev libavcodec-dev libavformat-dev libavutil-dev \
-    libswscale-dev freerdp2-dev libfreerdp-client2-2 libpango1.0-dev \
+    libswscale-dev freerdp2-dev libpango1.0-dev \
     libssh2-1-dev libtelnet-dev libvncserver-dev libwebsockets-dev \
     libpulse-dev libssl-dev libvorbis-dev libwebp-dev \
     ghostscript postgresql-${PG_MAJOR} \
@@ -52,8 +56,7 @@ RUN curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamo
 # Install guacamole-client and postgres auth adapter
 RUN set -x \
   && rm -rf ${CATALINA_HOME}/webapps/ROOT \
-  && curl -SLo ${CATALINA_HOME}/webapps/ROOT.war "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${GUAC_VER}.war" \
-  && curl -SLo ${GUACAMOLE_HOME}/lib/postgresql-${PSQLJDBC_VER}.jar "https://jdbc.postgresql.org/download/postgresql-${PSQLJDBC_VER}.jar" \
+  && curl -SLo ${CATALINA_HOME}/webapps/ROOT.war "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${G$  && curl -SLo ${GUACAMOLE_HOME}/lib/postgresql-${PSQLJDBC_VER}.jar "https://jdbc.postgresql.org/download/postgresql-${PSQLJDBC_VER}.jar" \
   && curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz" \
   && tar -xzf guacamole-auth-jdbc-${GUAC_VER}.tar.gz \
   && cp -R guacamole-auth-jdbc-${GUAC_VER}/postgresql/guacamole-auth-jdbc-postgresql-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions/ \
