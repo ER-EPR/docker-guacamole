@@ -7,7 +7,7 @@ ENV ARCH=amd64 \
   PGDATA=/config/postgres \
   POSTGRES_USER=guacamole \
   POSTGRES_DB=guacamole_db \
-  PSQLJDBC_VER = 42.4.0
+  PSQLJDBC_VER=42.4.0
 
 # Apply the s6-overlay
 
