@@ -75,7 +75,7 @@ ENV PATH=/usr/lib/postgresql/${PG_MAJOR}/bin:$PATH
 ENV GUACAMOLE_HOME=/config/guacamole
 
 WORKDIR /config
-COPY root/test.md /
+
 COPY root /
 
 EXPOSE 8080
