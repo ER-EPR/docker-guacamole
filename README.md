@@ -1,4 +1,4 @@
-**:warning: This project is now archived and no longer supported. Please contact me if you maintain a replacement and would like me to link to your repo.**
+**:warning: Update to 1.4.0 base on the original oznu 1.3.0 repo**
 
 # Docker Guacamole
 
