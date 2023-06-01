@@ -44,7 +44,7 @@ RUN apt-get update && apt-get install -y build-essential
 
 # Install guacamole-server  --with-init-dir=/etc/init.d
 
-RUN curl -SLO "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/source/guacamole-server-${GUAC_VER}.tar.gz?action=download" -o "guacamole-server-${GUAC_VER}.tar.gz"\
+RUN curl -SL "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/source/guacamole-server-${GUAC_VER}.tar.gz?action=download" -o "guacamole-server-${GUAC_VER}.tar.gz"\
   && tar -xzf guacamole-server-${GUAC_VER}.tar.gz \
   && cd guacamole-server-${GUAC_VER} \
   && ./configure --enable-allow-freerdp-snapshots \
@@ -57,9 +57,9 @@ RUN curl -SLO "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/source/gu
 # Install guacamole-client and postgres auth adapter
 RUN set -x \
   && rm -rf ${CATALINA_HOME}/webapps/ROOT \
-  && curl -SLo ${CATALINA_HOME}/webapps/ROOT.war "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${GUAC_VER}.war?action=download" -o "guacamole-${GUAC_VER}.war"\
+  && curl -SLo ${CATALINA_HOME}/webapps/ROOT.war "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${GUAC_VER}.war?action=download" \
   && curl -SLo ${GUACAMOLE_HOME}/lib/postgresql-${PSQLJDBC_VER}.jar "https://jdbc.postgresql.org/download/postgresql-${PSQLJDBC_VER}.jar" \
-  && curl -SLO "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz?action=download" -o "guacamole-auth-jdbc-${GUAC_VER}.tar.gz"\
+  && curl -SL "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz?action=download" -o "guacamole-auth-jdbc-${GUAC_VER}.tar.gz"\
   && tar -xzf guacamole-auth-jdbc-${GUAC_VER}.tar.gz \
   && cp -R guacamole-auth-jdbc-${GUAC_VER}/postgresql/guacamole-auth-jdbc-postgresql-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions/ \
   && cp -R guacamole-auth-jdbc-${GUAC_VER}/postgresql/schema ${GUACAMOLE_HOME}/ \
@@ -70,7 +70,7 @@ RUN set -xe \
   && mkdir ${GUACAMOLE_HOME}/extensions-available \
   && for i in auth-ldap auth-duo auth-header auth-cas auth-openid auth-quickconnect auth-totp; do \
     echo "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz?action=download" \
-    && curl -SLO "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz?action=download" -o "guacamole-${i}-${GUAC_VER}.tar.gz"\
+    && curl -SL "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz?action=download" -o "guacamole-${i}-${GUAC_VER}.tar.gz"\
     && tar -xzf guacamole-${i}-${GUAC_VER}.tar.gz \
     && cp guacamole-${i}-${GUAC_VER}/guacamole-${i}-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions-available/ \
     && rm -rf guacamole-${i}-${GUAC_VER} guacamole-${i}-${GUAC_VER}.tar.gz \
