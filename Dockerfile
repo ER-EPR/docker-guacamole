@@ -4,11 +4,11 @@ ARG S6_OVERLAY_VERSION=3.2.0.0
 ENV ARCH=x86_64 \
   GUAC_VER=1.5.5 \
   GUACAMOLE_HOME=/app/guacamole \
-  PG_MAJOR=9.6 \
+  PG_MAJOR=16 \
   PGDATA=/config/postgres \
   POSTGRES_USER=guacamole \
   POSTGRES_DB=guacamole_db \
-  PSQLJDBC_VER=42.6.0 \
+  PSQLJDBC_VER=42.7.4 \
   LSB_RELEASE=noble
 
 # Apply the s6-overlay ./bin
