@@ -23,7 +23,7 @@ RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v
 
 WORKDIR ${GUACAMOLE_HOME}
 # Change postgresql source
-RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt ${LSB_RELEASE}-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+RUN 'echo "deb http://apt.postgresql.org/pub/repos/apt ${LSB_RELEASE}-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
   && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 # Install dependencies
