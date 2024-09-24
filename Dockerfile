@@ -1,7 +1,7 @@
 FROM library/tomcat:9.0.65-jre11-openjdk-bullseye
 
 ENV ARCH=amd64 \
-  GUAC_VER=1.5.2 \
+  GUAC_VER=1.5.5 \
   GUACAMOLE_HOME=/app/guacamole \
   PG_MAJOR=9.6 \
   PGDATA=/config/postgres \
@@ -68,7 +68,7 @@ RUN set -x \
 # Add optional extensions
 RUN set -xe \
   && mkdir ${GUACAMOLE_HOME}/extensions-available \
-  && for i in auth-ldap auth-duo auth-header auth-cas auth-openid auth-quickconnect auth-totp; do \
+  && for i in auth-duo auth-header auth-json auth-ldap auth-quickconnect auth-sso auth-totp history-recording-storage vault; do \
     echo "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz?action=download" \
     && curl -SL "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz?action=download" -o "guacamole-${i}-${GUAC_VER}.tar.gz"\
     && tar -xzf guacamole-${i}-${GUAC_VER}.tar.gz \
