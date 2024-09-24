@@ -14,8 +14,8 @@ ENV ARCH=amd64 \
 # Apply the s6-overlay ./bin xz-utils
 RUN apt-get update && apt-get install -y gnupg
 RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" \
-  && tar -xf s6-overlay-${ARCH}.tar.gz -C / \
-  && tar -xf s6-overlay-${ARCH}.tar.gz -C /usr \
+  && tar -xzf s6-overlay-${ARCH}.tar.gz -C / \
+  && tar -xzf s6-overlay-${ARCH}.tar.gz -C /usr \
   && rm -rf s6-overlay-${ARCH}.tar.gz \
   && mkdir -p ${GUACAMOLE_HOME} \
     ${GUACAMOLE_HOME}/lib \
