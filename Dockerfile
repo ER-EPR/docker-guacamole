@@ -1,4 +1,4 @@
-FROM library/tomcat:9-jre11-temurin-jammy⁠
+FROM library/tomcat:9-jre11-temurin-jammy
 
 ENV ARCH=amd64 \
   GUAC_VER=1.5.5 \
