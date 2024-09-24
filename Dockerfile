@@ -12,7 +12,7 @@ ENV ARCH=amd64 \
   LSB_RELEASE=jammy
 
 # Apply the s6-overlay ./bin xz-utils
-RUN apt-get update && apt-get install -y gnupg
+RUN apt-get update && apt-get install -y gnupg postgresql-common
 RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" \
   && tar -xzf s6-overlay-${ARCH}.tar.gz -C / \
   && tar -xzf s6-overlay-${ARCH}.tar.gz -C /usr \
@@ -23,8 +23,7 @@ RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v
 
 WORKDIR ${GUACAMOLE_HOME}
 # Change postgresql source
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt ${LSB_RELEASE}-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
-  && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+RUN /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
 
 # Install dependencies
 RUN apt-get update && apt-get install -y rsyslog\
