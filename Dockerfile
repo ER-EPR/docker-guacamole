@@ -74,6 +74,7 @@ RUN set -xe \
     && tar -xzf guacamole-${i}-${GUAC_VER}.tar.gz \
     && cp guacamole-${i}-${GUAC_VER}/*/*-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions-available/ \
     && rm -rf guacamole-${i}-${GUAC_VER} guacamole-${i}-${GUAC_VER}.tar.gz \
+  ;done \
   && for i in auth-duo auth-header auth-json auth-ldap auth-quickconnect auth-totp history-recording-storage; do \
     echo "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz?action=download" \
     && curl -SL "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz?action=download" -o "guacamole-${i}-${GUAC_VER}.tar.gz"\
