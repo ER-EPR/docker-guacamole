@@ -1,7 +1,7 @@
 FROM library/tomcat:9-jre11-temurin-noble
-ARG S6_OVERLAY_VERSION=3.2.0.0
+ARG S6_OVERLAY_VERSION=2.2.0.3
 
-ENV ARCH=x86_64 \
+ENV ARCH=amd64 \
   GUAC_VER=1.5.5 \
   GUACAMOLE_HOME=/app/guacamole \
   PG_MAJOR=16 \
@@ -11,12 +11,12 @@ ENV ARCH=x86_64 \
   PSQLJDBC_VER=42.7.4 \
   LSB_RELEASE=noble
 
-# Apply the s6-overlay ./bin
-RUN apt-get update && apt-get install -y xz-utils gnupg
-RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v3.2.0.0/s6-overlay-${ARCH}.tar.xz" \
-  && tar -xf s6-overlay-${ARCH}.tar.xz -C / \
-  && tar -xf s6-overlay-${ARCH}.tar.xz -C /usr \
-  && rm -rf s6-overlay-${ARCH}.tar.xz \
+# Apply the s6-overlay ./bin xz-utils
+RUN apt-get update && apt-get install -y gnupg
+RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" \
+  && tar -xf s6-overlay-${ARCH}.tar.gz -C / \
+  && tar -xf s6-overlay-${ARCH}.tar.gz -C /usr \
+  && rm -rf s6-overlay-${ARCH}.tar.gz \
   && mkdir -p ${GUACAMOLE_HOME} \
     ${GUACAMOLE_HOME}/lib \
     ${GUACAMOLE_HOME}/extensions
