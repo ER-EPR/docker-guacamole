@@ -71,7 +71,7 @@ RUN set -xe \
   && curl -SL "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-vault-${GUAC_VER}.tar.gz?action=download" -o "guacamole-vault-${GUAC_VER}.tar.gz"\
   && tar -xzf guacamole-vault-${GUAC_VER}.tar.gz \
   # fix vault file name add vault-ksm
-  && cp guacamole-vault-${GUAC_VER}/guacamole-vault-ksm-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions-available/ \ 
+  && cp guacamole-vault-${GUAC_VER}/ksm/guacamole-vault-ksm-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions-available/ \ 
   && rm -rf guacamole-vault-${GUAC_VER} guacamole-vault-${GUAC_VER}.tar.gz \
   && for i in auth-duo auth-header auth-json auth-ldap auth-quickconnect auth-sso auth-totp history-recording-storage; do \
     echo "https://apache.org/dyn/closer.lua/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz?action=download" \
