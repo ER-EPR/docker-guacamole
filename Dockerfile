@@ -11,11 +11,12 @@ ENV ARCH=x86_64 \
   PSQLJDBC_VER=42.6.0 \
   LSB_RELEASE=jammy
 
-# Apply the s6-overlay ./bin
-ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.xz /tmp
-RUN  ls /tmp && tar -C / -Jxpf /tmp/s6-overlay-${ARCH}.tar.xz
-RUN  tar -C /usr ./bin -Jxpf /tmp/s6-overlay-${ARCH}.tar.xz \
-  && rm -rf /tmp/s6-overlay-${ARCH}.tar.xz \
+# Apply the s6-overlay
+RUN apt-get update && apt-get install -y install xz-utils 
+RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v3.2.0.0/s6-overlay-${ARCH}.tar.xz" \
+  && tar -xf s6-overlay-${ARCH}.tar.xz -C / \
+  && tar -xf s6-overlay-${ARCH}.tar.xz -C /usr ./bin \
+  && rm -rf s6-overlay-${ARCH}.tar.xz \
   && mkdir -p ${GUACAMOLE_HOME} \
     ${GUACAMOLE_HOME}/lib \
     ${GUACAMOLE_HOME}/extensions
