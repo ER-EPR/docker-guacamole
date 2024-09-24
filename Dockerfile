@@ -1,4 +1,4 @@
-FROM library/tomcat:9-jre11-temurin-noble
+FROM library/tomcat:9-jre11-temurin-jammy
 ARG S6_OVERLAY_VERSION=2.2.0.3
 
 ENV ARCH=amd64 \
@@ -9,7 +9,7 @@ ENV ARCH=amd64 \
   POSTGRES_USER=guacamole \
   POSTGRES_DB=guacamole_db \
   PSQLJDBC_VER=42.7.4 \
-  LSB_RELEASE=noble
+  LSB_RELEASE=jammy
 
 # Apply the s6-overlay ./bin xz-utils
 RUN apt-get update && apt-get install -y gnupg
@@ -30,7 +30,7 @@ RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt ${LSB_RELEASE}-pgdg
 RUN apt-get update && apt-get install -y rsyslog\
     libcairo2-dev libjpeg-turbo8-dev libpng-dev \
     libtool-bin uuid-dev libavcodec-dev libavformat-dev libavutil-dev \
-    libswscale-dev freerdp3-dev libpango1.0-dev \
+    libswscale-dev freerdp2-dev libpango1.0-dev \
     libssh2-1-dev libtelnet-dev libvncserver-dev libwebsockets-dev \
     libpulse-dev libssl-dev libvorbis-dev libwebp-dev \
     ghostscript postgresql-${PG_MAJOR} \
