@@ -1,4 +1,5 @@
 FROM library/tomcat:9-jre11-temurin-jammy
+ARG S6_OVERLAY_VERSION=3.2.0.0
 
 ENV ARCH=x86_64 \
   GUAC_VER=1.5.5 \
@@ -11,11 +12,10 @@ ENV ARCH=x86_64 \
   LSB_RELEASE=jammy
 
 # Apply the s6-overlay ./bin
-
-RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v3.2.0.0/s6-overlay-${ARCH}.tar.xz" \
-  && tar -C / -Jxpf s6-overlay-${ARCH}.tar.xz \
-  && tar -C /usr -Jxpf s6-overlay-${ARCH}.tar.xz \
-  && rm -rf s6-overlay-${ARCH}.tar.xz \
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.xz /tmp
+RUN  tar -C / -Jxpf /tmp/s6-overlay-${ARCH}.tar.xz \
+  && tar -C /usr -Jxpf /tmp/s6-overlay-${ARCH}.tar.xz \
+  && rm -rf /tmp/s6-overlay-${ARCH}.tar.xz \
   && mkdir -p ${GUACAMOLE_HOME} \
     ${GUACAMOLE_HOME}/lib \
     ${GUACAMOLE_HOME}/extensions
