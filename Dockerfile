@@ -1,6 +1,6 @@
 FROM library/tomcat:9-jre11-temurin-jammy
 
-ENV ARCH=amd64 \
+ENV ARCH=x86_64 \
   GUAC_VER=1.5.5 \
   GUACAMOLE_HOME=/app/guacamole \
   PG_MAJOR=9.6 \
@@ -12,7 +12,7 @@ ENV ARCH=amd64 \
 
 # Apply the s6-overlay
 
-RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v3.2.0.0/s6-overlay-${ARCH}.tar.gz" \
+RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v3.2.0.0/s6-overlay-${ARCH}.tar.xz" \
   && tar -xzf s6-overlay-${ARCH}.tar.gz -C / \
   && tar -xzf s6-overlay-${ARCH}.tar.gz -C /usr ./bin \
   && rm -rf s6-overlay-${ARCH}.tar.gz \
@@ -37,7 +37,7 @@ RUN apt-get update && apt-get install -y rsyslog\
 
 # Link FreeRDP to where guac expects it to be
 RUN [ "$ARCH" = "armhf" ] && ln -s /usr/local/lib/freerdp /usr/lib/arm-linux-gnueabihf/freerdp || exit 0
-RUN [ "$ARCH" = "amd64" ] && ln -s /usr/local/lib/freerdp /usr/lib/x86_64-linux-gnu/freerdp || exit 0
+RUN [ "$ARCH" = "x86_64" ] && ln -s /usr/local/lib/freerdp /usr/lib/x86_64-linux-gnu/freerdp || exit 0
 
 # Add make and gcc
 RUN apt-get update && apt-get install -y build-essential
