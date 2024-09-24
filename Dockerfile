@@ -8,11 +8,11 @@ ENV ARCH=amd64 \
   POSTGRES_USER=guacamole \
   POSTGRES_DB=guacamole_db \
   PSQLJDBC_VER=42.6.0 \
-  LSB_RELEASE=bullseye
+  LSB_RELEASE=jammy
 
 # Apply the s6-overlay
 
-RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-${ARCH}.tar.gz" \
+RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v3.2.0.0/s6-overlay-${ARCH}.tar.gz" \
   && tar -xzf s6-overlay-${ARCH}.tar.gz -C / \
   && tar -xzf s6-overlay-${ARCH}.tar.gz -C /usr ./bin \
   && rm -rf s6-overlay-${ARCH}.tar.gz \
@@ -29,7 +29,7 @@ RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt ${LSB_RELEASE}-pgdg
 RUN apt-get update && apt-get install -y rsyslog\
     libcairo2-dev libjpeg-turbo8-dev libpng-dev \
     libtool-bin uuid-dev libavcodec-dev libavformat-dev libavutil-dev \
-    libswscale-dev freerdp2-dev libpango1.0-dev \
+    libswscale-dev freerdp3-dev libpango1.0-dev \
     libssh2-1-dev libtelnet-dev libvncserver-dev libwebsockets-dev \
     libpulse-dev libssl-dev libvorbis-dev libwebp-dev \
     ghostscript postgresql-${PG_MAJOR} \
