@@ -1,4 +1,4 @@
-FROM library/tomcat:9-jre11-temurin-jammy
+FROM library/tomcat:9-jre11-temurin-noble
 ARG S6_OVERLAY_VERSION=3.2.0.0
 
 ENV ARCH=x86_64 \
@@ -9,7 +9,7 @@ ENV ARCH=x86_64 \
   POSTGRES_USER=guacamole \
   POSTGRES_DB=guacamole_db \
   PSQLJDBC_VER=42.6.0 \
-  LSB_RELEASE=jammy
+  LSB_RELEASE=noble
 
 # Apply the s6-overlay ./bin
 RUN apt-get update && apt-get install -y xz-utils gnupg
